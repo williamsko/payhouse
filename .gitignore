@@ -5,9 +5,9 @@
 
 ## Project
 local_settings.py
-#public/static
+public/static
 public/media
-ecajou/static/webfonts
+payhouse/static/webfonts
 
 ## SQLite3
 *.sqlite3
