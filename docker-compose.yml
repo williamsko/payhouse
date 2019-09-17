@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:10.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  be_playoff:
+    build: .
+    command: sh /code/start_be.sh
+    volumes:
+      - .:/code
+      - ./public/static:/code/public/static
+    expose:
+      - "8000"
+    depends_on:
+      - db
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    volumes:
+      - ./public/static:/code/public/static
+    ports:
+      - "80:80"
+    links:
+      - be_playoff
+
+  redis:
+    image: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
