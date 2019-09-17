@@ -5,6 +5,7 @@
 
 ## Project
 local_settings.py
+public/*
 public/static
 public/media
 payhouse/static/webfonts
