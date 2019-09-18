@@ -46,8 +46,11 @@ class TransactionPipeline:
         class_name = 'Services'
         module = __import__('transaction.services.%s'%self.partner.brand_name.lower(), fromlist=[class_name])
         klass = getattr(module, class_name)
-        #Return obj
-        return klass()
+
+        #build object
+        _class = klass(self.data)
+
+        return _class
 
     def prepare(self):
 
@@ -131,16 +134,20 @@ class TransactionPipeline:
             #Reject transaction , unable to lock redis key
             return TransactionPipelineError(message='REDIS_KEY_LOCK_ERROR')
 
-        partner_class_obj = self.get_partner_package_obj()
+
+        partner_api_class_obj = self.get_partner_package_obj()
+        partner_api_class_obj.set_entity(self.entity)
+        partner_api_class_obj.set_partner(self.partner)
+        partner_api_class_obj.set_service(self.service)
 
         pipe = self.redis_connection.pipeline(True)
         try:
             pipe.watch(identifier) # Watch the lockname
 
-            #partner_class_obj.payment_confirmation(self.data)
-            print ("A")
-            print ("B")
-            print ("C")
+            result = partner_api_class_obj.execute()
+            print ("**********")
+            print (result)
+            print ("*********")
 
             pipe.unwatch() #Unwatch the lock
 

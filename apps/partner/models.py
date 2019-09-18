@@ -71,6 +71,8 @@ class Service(models.Model):
     modified_at = models.DateTimeField('Modification date', auto_now=True)
     max_retries = models.PositiveIntegerField(default=True)
     ping_status = models.BooleanField(('Service activity status'),help_text="Service's activity status in the system", default=False)
+    demo_base_url = models.CharField(max_length=255,default="http://")
+    prod_base_url = models.CharField(max_length=255,default="http://")
     status = models.BooleanField(('Status'),help_text="Service's status in the system", default=True)
 
     class Meta:

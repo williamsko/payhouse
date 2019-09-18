@@ -129,6 +129,8 @@ class ServiceAdmin(admin.ModelAdmin):
         'created_at',
         'modified_at',
         'max_retries',
+        'demo_base_url',
+        'prod_base_url',
         'ping_status',
 
         'status',

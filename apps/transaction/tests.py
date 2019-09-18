@@ -71,6 +71,5 @@ class TestTransactionPipeline (TestCase):
         self.assertEqual(True,self.t_pipeline.prepare())
 
     def test_run_pass(self):
-        entity = self.t_pipeline.retreive_entity()
-        self.t_pipeline.retreive_partner()
+        self.t_pipeline.prepare()
         self.assertEqual(True,self.t_pipeline.run())
