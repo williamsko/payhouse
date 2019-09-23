@@ -1,5 +1,5 @@
 from django.test import TestCase
-from transaction.pipeline import TransactionPipeline
+from transaction.pipeline import TransactionPipeline, TransactionPipelineRunner
 from transaction.exceptions import TransactionPipelineError
 from transaction.errors import API_ERRORS
 from entity.models import Entity, EntityBalance
@@ -72,4 +72,5 @@ class TestTransactionPipeline (TestCase):
 
     def test_run_pass(self):
         self.t_pipeline.prepare()
-        self.assertEqual(True,self.t_pipeline.run())
+        t_pipeline_runner = TransactionPipelineRunner(self.t_pipeline)
+        self.assertEqual(True,t_pipeline_runner.run())

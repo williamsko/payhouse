@@ -17,11 +17,7 @@ class TransactionPipeline:
         #Transaction amount
         self.amount = self.data['amount']
 
-        #Redis object
-        self.redis_connection = None
-        self.HOST = "redis"
-        self.PORT = 6379
-
+        
         #queue jeton
         self.lockname = self.data['entity_reference']
 
@@ -122,39 +118,3 @@ class TransactionPipeline:
 
     def close_connection_to_redis(self,_redis_connection):
         _redis_connection.close()
-
-
-    def run(self):
-
-        #redis connection
-        self.redis_connection = self.connect_to_redis(host=self.HOST,port=self.PORT)
-
-        identifier = self.acquire_lock(self.redis_connection)
-        if identifier is False :
-            #Reject transaction , unable to lock redis key
-            return TransactionPipelineError(message='REDIS_KEY_LOCK_ERROR')
-
-
-        partner_api_class_obj = self.get_partner_package_obj()
-        partner_api_class_obj.set_entity(self.entity)
-        partner_api_class_obj.set_partner(self.partner)
-        partner_api_class_obj.set_service(self.service)
-
-        pipe = self.redis_connection.pipeline(True)
-        try:
-            pipe.watch(identifier) # Watch the lockname
-
-            result = partner_api_class_obj.execute()
-            print ("**********")
-            print (result)
-            print ("*********")
-
-            pipe.unwatch() #Unwatch the lock
-
-            return True
-        except redis.exceptions.WatchError as err:
-            print (err)
-            return TransactionPipelineError(message='REDIS_WATCH_LOCK_ERROR')
-        finally:
-            #finally release lock
-            self.release_lock(identifier,self.redis_connection)
