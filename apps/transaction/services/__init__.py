@@ -27,9 +27,7 @@ class Services :
         else:
             self.base_url = self.service.prod_base_url
 
-    def execute(self):
-        print (self.base_url)
-        pass
 
-    def transaction(self):
-        pass
+
+    def create_transaction(self):
+        print ("create_transaction")

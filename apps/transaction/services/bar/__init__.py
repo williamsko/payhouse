@@ -1,6 +1,7 @@
 
 from transaction.services import Services as S
-
+import requests
+import requests_mock
 
 class Services (S):
 
@@ -8,9 +9,11 @@ class Services (S):
         S.__init__(self,data)
 
     def execute(self):
-        service_reference = self.data["service_reference"]
-        print (self.entity.brand_name)
-        print (self.partner.brand_name)
-        print (self.base_url)
+        session = requests.Session()
+        adapter = requests_mock.Adapter()
 
-        pass
+        session.mount('mock', adapter)
+        adapter.register_uri('GET', 'mock://test.com', text='data')
+        resp = session.get('mock://test.com')
+        resp.status_code, resp.text
+        return resp.status_code, resp.text

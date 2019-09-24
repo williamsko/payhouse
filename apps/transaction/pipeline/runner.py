@@ -7,20 +7,15 @@ import redis
 
 
 class TransactionPipelineRunner :
-
     def __init__(self,t_pipeline):
         self.t_pipeline = t_pipeline
 
         #Redis object
         self.HOST = "redis"
         self.PORT = 6379
-
         self.redis_connection = None
 
-
-
     def run(self):
-
         #redis connection
         self.redis_connection = self.t_pipeline.connect_to_redis(host=self.HOST,port=self.PORT)
 
@@ -28,7 +23,6 @@ class TransactionPipelineRunner :
         if identifier is False :
             #Reject transaction , unable to lock redis key
             return TransactionPipelineError(message='REDIS_KEY_LOCK_ERROR')
-
 
         partner_api_class_obj = self.t_pipeline.get_partner_package_obj()
         partner_api_class_obj.set_entity(self.t_pipeline.entity)
@@ -43,6 +37,8 @@ class TransactionPipelineRunner :
             print ("**********")
             print (result)
             print ("*********")
+
+            partner_api_class_obj.create_transaction()
 
             pipe.unwatch() #Unwatch the lock
 
