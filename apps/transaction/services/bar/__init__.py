@@ -11,7 +11,6 @@ class Services (S):
     def execute(self):
         session = requests.Session()
         adapter = requests_mock.Adapter()
-
         session.mount('mock', adapter)
         adapter.register_uri('GET', 'mock://test.com', text='data')
         resp = session.get('mock://test.com')

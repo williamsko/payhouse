@@ -25,7 +25,7 @@ sudo pip install docker-compose
 - Clone the project on your the server on your local machine
 ```
 - git clone https://github.com/williamsko/payhouse.git
-- cd ecajou
+- cd payhouse
 
 ```
 
@@ -62,8 +62,8 @@ sudo pip install docker-compose
 ### You can use instead this 2 steps below
 run  deploy.sh script to deploy
 ```
-- git clone https://github.com/williamsko/ecajou.git
-- cd ecajou
+- git clone https://github.com/williamsko/payhouse.git
+- cd payhouse
 - sudo chmod +x deploy.sh
 - sudo ./deploy.sh
 ```

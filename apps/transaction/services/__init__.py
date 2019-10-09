@@ -1,5 +1,5 @@
 from os import environ
-
+from transaction.models import Transaction
 class Services :
 
     def __init__(self,data):
@@ -29,5 +29,8 @@ class Services :
 
 
 
-    def create_transaction(self):
+    def create_transaction(self,request_response):
         print ("create_transaction")
+        transaction = Transaction()
+
+        pass

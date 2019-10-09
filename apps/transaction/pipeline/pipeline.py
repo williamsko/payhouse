@@ -1,6 +1,6 @@
 from entity.models import Entity
 from partner.models import Partner, Service
-from transaction.exceptions import TransactionPipelineError
+from utils.exceptions import TransactionPipelineError
 import time
 import uuid
 import redis
@@ -17,7 +17,7 @@ class TransactionPipeline:
         #Transaction amount
         self.amount = self.data['amount']
 
-        
+
         #queue jeton
         self.lockname = self.data['entity_reference']
 

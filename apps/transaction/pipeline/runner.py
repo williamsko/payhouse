@@ -1,6 +1,6 @@
 from entity.models import Entity
 from partner.models import Partner, Service
-from transaction.exceptions import TransactionPipelineError
+from utils.exceptions import TransactionPipelineError
 import time
 import uuid
 import redis
@@ -38,7 +38,7 @@ class TransactionPipelineRunner :
             print (result)
             print ("*********")
 
-            partner_api_class_obj.create_transaction()
+            partner_api_class_obj.create_transaction(result)
 
             pipe.unwatch() #Unwatch the lock
 
