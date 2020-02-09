@@ -6,10 +6,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 
-ENV http_proxy http://firewall.ina.fr:81
-ENV https_proxy http://firewall.ina.fr:81
-
-
 # Set work directory
 WORKDIR /code
 
