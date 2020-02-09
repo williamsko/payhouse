@@ -1,7 +1,6 @@
 from django.test import TestCase
 from transaction.pipeline import TransactionPipeline, TransactionPipelineRunner
 from utils.exceptions import TransactionPipelineError
-from utils.errors import API_ERRORS
 from entity.models import Entity, EntityBalance
 from partner.models import Partner, Service
 
